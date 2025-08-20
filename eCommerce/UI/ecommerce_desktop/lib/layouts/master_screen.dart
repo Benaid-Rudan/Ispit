@@ -31,6 +31,7 @@ class _MasterScreenState extends State<MasterScreen> {
             ListTile(title: Text('Product Details'), onTap: () {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProductDetailsScreen()));
             },),
+           
           ],
         ),
       ),

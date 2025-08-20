@@ -15,6 +15,10 @@ builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUnitOfMeasureService, UnitOfMeasureService>();
+builder.Services.AddTransient<IRadniProstorService, RadniProstorService>();
+builder.Services.AddTransient<IRezervacijaProstoraService, RezervacijaProstoraService>();
+
+
 
 builder.Services.AddTransient<BaseProductState>();
 builder.Services.AddTransient<InitialProductState>();
@@ -55,10 +59,14 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-
+builder.WebHost.UseUrls("http://0.0.0.0:5121");
 
 var app = builder.Build();
-
+// If using ASP.NET Core
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 // Ensure database is created
 // using (var scope = app.Services.CreateScope())
 // {

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:ecommerce_mobile/model/cart_provider.dart';
 import 'package:ecommerce_mobile/providers/auth_provider.dart';
 import 'package:ecommerce_mobile/providers/logged_product_provider.dart';
 import 'package:ecommerce_mobile/providers/product_provider.dart';
 import 'package:ecommerce_mobile/providers/product_type_provider.dart';
 import 'package:ecommerce_mobile/providers/unit_of_measure_provider.dart';
+import 'package:ecommerce_mobile/providers/user_provider.dart';
 import 'package:ecommerce_mobile/screens/product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +21,9 @@ void main() {
         create: (context) => ProductTypeProvider()),
     ChangeNotifierProvider<CartProvider>(
         create: (context) => CartProvider()),
+        
+           ChangeNotifierProvider<UserProvider>(
+        create: (context) => UserProvider()),
   ], child: const MyLoginApp()));
 }
 
@@ -132,24 +138,48 @@ class LoginPage extends StatelessWidget {
                     )
                   ),
                   child: InkWell(
-                    onTap: () async {
-                      ProductProvider provider = new ProductProvider();
-                    
-                    print("credentials: ${_usernameController.text} : ${_passwordController.text}");
-                    AuthProvider.username = _usernameController.text;
-                    AuthProvider.password = _passwordController.text;
+                   onTap: () async {
+  if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Error"),
+        content: Text("Please enter both username and password"),
+        actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text("OK"))],
+      ),
+    );
+    return;
+  }
 
-                    if (_usernameController.text == "") {
+  AuthProvider.username = _usernameController.text;
+  AuthProvider.password = _passwordController.text;
 
-                    }
-                    try {
-                      await provider.get();
-                      Navigator.of(context).push(MaterialPageRoute(builder:  (context) => ProductList()));
-
-                    } on Exception catch (e) {
-                      showDialog(context: context, builder: (context) => AlertDialog(title: Text("Error"), actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text("OK"))], content: Text(e.toString()),));
-                    }
-                    },
+  try {
+    ProductProvider provider = ProductProvider();
+    await provider.get();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => ProductList())
+    );
+  } on SocketException catch (e) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Connection Error"),
+        content: Text("Could not connect to server. Please check:\n1. Server is running\n2. Correct IP/port\n3. Network connection"),
+        actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text("OK"))],
+      ),
+    );
+  } on Exception catch (e) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("Error"),
+        content: Text(e.toString()),
+        actions: [TextButton(onPressed: () => Navigator.pop(context), child: Text("OK"))],
+      ),
+    );
+  }
+},
                     child: Center(child: Text("Login", style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),),),
                   ),
                 ),

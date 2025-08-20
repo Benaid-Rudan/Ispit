@@ -1,5 +1,6 @@
+
+
 import 'package:ecommerce_desktop/providers/auth_provider.dart';
-import 'package:ecommerce_desktop/providers/logged_product_provider.dart';
 import 'package:ecommerce_desktop/providers/product_provider.dart';
 import 'package:ecommerce_desktop/providers/product_type_provider.dart';
 import 'package:ecommerce_desktop/providers/unit_of_measure_provider.dart';
@@ -15,6 +16,7 @@ void main() {
         create: (context) => UnitOfMeasureProvider()),
     ChangeNotifierProvider<ProductTypeProvider>(
         create: (context) => ProductTypeProvider()),
+       
   ], child: const MyLoginApp()));
 }
 

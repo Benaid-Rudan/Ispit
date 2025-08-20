@@ -4,12 +4,12 @@ using System.Threading.Tasks;
 using eCommerce.Model.Responses;
 using eCommerce.Model.Requests;
 using eCommerce.Model.SearchObjects;
-
+using eCommerce.Model.Responses;
 namespace eCommerce.Services
 {
     public interface IUserService
     {
-        Task<List<UserResponse>> GetAsync(UserSearchObject search);
+        Task<List<eCommerce.Model.Responses.UserResponse>> GetAsync(UserSearchObject search);
         Task<UserResponse?> GetByIdAsync(int id);
         Task<UserResponse> CreateAsync(UserUpsertRequest request);
         Task<UserResponse?> UpdateAsync(int id, UserUpsertRequest request);
