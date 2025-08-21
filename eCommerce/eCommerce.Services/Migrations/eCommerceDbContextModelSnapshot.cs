@@ -444,7 +444,7 @@ namespace eCommerce.Services.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RezervacijaProstoraId"));
 
-                    b.Property<DateTime>("DatumRezervacije")
+                    b.Property<DateTime>("DatumEvidencije")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("KorisnikId")
