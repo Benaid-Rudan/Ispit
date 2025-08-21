@@ -24,6 +24,7 @@ namespace eCommerce.Services.Database
         public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
         public DbSet<RezervacijaProstora> RezervacijaProstora { get; set; }
         public DbSet<RadniProstor> RadniProstor { get; set; }
+        public DbSet<Mood> Mood { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

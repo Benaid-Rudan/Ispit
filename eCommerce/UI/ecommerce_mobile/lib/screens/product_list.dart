@@ -3,7 +3,7 @@ import 'package:ecommerce_mobile/model/cart_provider.dart';
 import 'package:ecommerce_mobile/model/product.dart';
 import 'package:ecommerce_mobile/model/search_result.dart';
 import 'package:ecommerce_mobile/providers/utils.dart';
-import 'package:ecommerce_mobile/screens/product_details_screen.dart';
+import 'package:ecommerce_mobile/screens/mood_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ecommerce_mobile/providers/product_provider.dart';
