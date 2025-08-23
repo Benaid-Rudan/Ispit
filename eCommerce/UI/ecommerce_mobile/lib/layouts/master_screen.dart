@@ -1,6 +1,7 @@
 import 'package:ecommerce_mobile/screens/cart_screen.dart';
 import 'package:ecommerce_mobile/screens/product_details_screen.dart';
 import 'package:ecommerce_mobile/screens/product_list.dart';
+import 'package:ecommerce_mobile/screens/rezervacija_list.dart';
 import 'package:flutter/material.dart';
 
 class MasterScreen extends StatefulWidget {
@@ -34,6 +35,10 @@ class _MasterScreenState extends State<MasterScreen> {
             },), ListTile(title: Text('Cart'), onTap: () {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartScreen()));
             },),
+            ListTile(title: Text('Rezervacija List'), onTap: () {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => RezervacijaList()));
+            },),
+            
           ],
         ),
       ),
