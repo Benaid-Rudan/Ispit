@@ -22,7 +22,11 @@ namespace eCommerce.Services.Database
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
-       
+
+        public DbSet<Transakcija> Transakcija { get; set; }
+        public DbSet<TransakcijaLog> TransakcijaLog { get; set; }
+        public DbSet<KategorijaTransakcije> KategorijaTransakcije { get; set; }
+        public DbSet<FinansijskiLimit> FinansijskiLimit { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

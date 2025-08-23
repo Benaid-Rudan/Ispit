@@ -16,6 +16,11 @@ builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUnitOfMeasureService, UnitOfMeasureService>();
 
+builder.Services.AddTransient<IKategorijaTransakcijeService, KategorijaTransakcijeService>();
+builder.Services.AddTransient<ITransakcijaService, TransakcijaService>();
+builder.Services.AddTransient<ITransakcijaLogService, TransakcijaLogService>();
+builder.Services.AddTransient<IFinansijskiLimitService, FinansijskiLimitService>();
+
 
 
 builder.Services.AddTransient<BaseProductState>();
