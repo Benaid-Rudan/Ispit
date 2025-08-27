@@ -1,12 +1,16 @@
 import 'dart:io';
 
 import 'package:ecommerce_mobile/model/cart_provider.dart';
+import 'package:ecommerce_mobile/model/user.dart';
 import 'package:ecommerce_mobile/providers/auth_provider.dart';
 import 'package:ecommerce_mobile/providers/logged_product_provider.dart';
+import 'package:ecommerce_mobile/providers/peer_challenge_provider.dart';
 import 'package:ecommerce_mobile/providers/product_provider.dart';
 import 'package:ecommerce_mobile/providers/product_type_provider.dart';
 import 'package:ecommerce_mobile/providers/unit_of_measure_provider.dart';
+import 'package:ecommerce_mobile/providers/user_challenge_provider.dart';
 import 'package:ecommerce_mobile/providers/user_provider.dart';
+import 'package:ecommerce_mobile/screens/challenge_list.dart';
 import 'package:ecommerce_mobile/screens/product_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,9 +25,15 @@ void main() {
         create: (context) => ProductTypeProvider()),
     ChangeNotifierProvider<CartProvider>(
         create: (context) => CartProvider()),
-        
-           ChangeNotifierProvider<UserProvider>(
-        create: (context) => UserProvider()),
+         ChangeNotifierProvider<CartProvider>(
+        create: (context) => CartProvider()),
+           ChangeNotifierProvider<UserChallengeProvider>(
+        create: (context) => UserChallengeProvider()),
+        ChangeNotifierProvider<PeerChallengeProvider>(
+        create: (context) => PeerChallengeProvider()),
+
+        ChangeNotifierProvider<UserProvider>(
+            create: (context) => UserProvider())
   ], child: const MyLoginApp()));
 }
 
@@ -153,12 +163,19 @@ class LoginPage extends StatelessWidget {
 
   AuthProvider.username = _usernameController.text;
   AuthProvider.password = _passwordController.text;
-
+  
   try {
+    UserProvider userProvider = UserProvider();
+    User user = await userProvider.getMe();
+    print("=== Main.dart login ===");
+    print("Fetched user: ${user.id}");
+    print("Fetched user username: ${user.username}");
+    
     ProductProvider provider = ProductProvider();
     await provider.get();
+    
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => ProductList())
+      MaterialPageRoute(builder: (context) => ProductList(user: user))
     );
   } on SocketException catch (e) {
     showDialog(

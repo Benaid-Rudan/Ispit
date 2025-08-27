@@ -35,6 +35,19 @@ namespace eCommerce.WebAPI.Controllers
                 
             return user;
         }
+        [HttpGet("me")]
+        public async Task<ActionResult<UserResponse>> GetMe([FromServices] ICurrentUserService currentUserService)
+        {
+            var userId = currentUserService.UserId;
+            if (userId == null)
+                return Unauthorized();
+
+            var user = await _userService.GetByIdAsync(userId.Value);
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
 
         [HttpPost]
         public async Task<ActionResult<UserResponse>> Create(UserUpsertRequest request)

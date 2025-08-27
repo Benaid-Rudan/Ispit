@@ -1,12 +1,18 @@
+import 'package:ecommerce_mobile/main.dart';
+import 'package:ecommerce_mobile/providers/user_provider.dart';
 import 'package:ecommerce_mobile/screens/cart_screen.dart';
+import 'package:ecommerce_mobile/screens/challenge_list.dart';
+import 'package:ecommerce_mobile/screens/challenge_list2.dart';
 import 'package:ecommerce_mobile/screens/product_details_screen.dart';
 import 'package:ecommerce_mobile/screens/product_list.dart';
+import 'package:ecommerce_mobile/model/user.dart';
 import 'package:flutter/material.dart';
 
 class MasterScreen extends StatefulWidget {
-  const MasterScreen({super.key, required this.child, required this.title});
+  const MasterScreen({super.key, required this.child, required this.title, this.user});
   final Widget child;
   final String title;
+  final User? user;
 
   @override
   State<MasterScreen> createState() => _MasterScreenState();
@@ -34,6 +40,15 @@ class _MasterScreenState extends State<MasterScreen> {
             },), ListTile(title: Text('Cart'), onTap: () {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartScreen()));
             },),
+            ListTile(title: Text('Login'), onTap: () {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
+            },),
+            ListTile(title: Text('Challenge'), onTap: () async {
+              UserProvider userProvider = UserProvider();
+              User user = await userProvider.getMe();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChallengeList(user: user)));
+            },),
+           
           ],
         ),
       ),

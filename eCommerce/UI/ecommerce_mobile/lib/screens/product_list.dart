@@ -2,6 +2,7 @@ import 'package:ecommerce_mobile/layouts/master_screen.dart';
 import 'package:ecommerce_mobile/model/cart_provider.dart';
 import 'package:ecommerce_mobile/model/product.dart';
 import 'package:ecommerce_mobile/model/search_result.dart';
+import 'package:ecommerce_mobile/model/user.dart';
 import 'package:ecommerce_mobile/providers/utils.dart';
 import 'package:ecommerce_mobile/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,9 @@ import 'package:provider/provider.dart';
 import 'package:ecommerce_mobile/providers/product_provider.dart';
 
 class ProductList extends StatefulWidget {
-  const ProductList({super.key});
+  const ProductList({super.key, this.user});
+
+  final User? user;
 
   @override
   State<ProductList> createState() => _ProductListState();
@@ -32,6 +35,9 @@ class _ProductListState extends State<ProductList> {
   @override
   void initState() {
     super.initState();
+    print("=== ProductList initState ===");
+    print("Received user: ${widget.user?.id}");
+    print("Received user username: ${widget.user?.username}");
     productProvider = context.read<ProductProvider>();
     cartProvider = context.read<CartProvider>();
     loadData();
@@ -50,6 +56,7 @@ class _ProductListState extends State<ProductList> {
   Widget build(BuildContext context) {
     return MasterScreen(
       title: "Product List",
+      user: widget.user,
       child: Center(
         child: Column(
           children: [

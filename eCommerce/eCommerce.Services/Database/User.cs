@@ -42,5 +42,9 @@ namespace eCommerce.Services.Database
         
         // Navigation property for the many-to-many relationship with Role
         public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+        public virtual ICollection<UserChallenge> UserChallenges { get; set; }
+        public virtual ICollection<PeerChallenge> SentChallenges { get; set; }
+        public virtual ICollection<PeerChallenge> ReceivedChallenges { get; set; }
+
     }
 } 

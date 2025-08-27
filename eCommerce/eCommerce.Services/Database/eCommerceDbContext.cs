@@ -22,8 +22,10 @@ namespace eCommerce.Services.Database
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
-       
-
+        public DbSet<Challenge> Challenge { get; set; }
+        public DbSet<UserChallenge> UserChallenge { get; set; }
+        public DbSet<PeerChallenge> PeerChallenge { get; set; }
+        public DbSet<ChallengeReward> ChallengeReward { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -180,6 +182,41 @@ namespace eCommerce.Services.Database
             modelBuilder.Entity<UserRole>()
                 .HasIndex(ur => new { ur.UserId, ur.RoleId })
                 .IsUnique();
+
+            modelBuilder.Entity<PeerChallenge>(entity =>
+            {
+                // Veza sa Izazivaèem (User koji šalje izazov)
+                entity.HasOne(pc => pc.Izazivac)
+                      .WithMany(u => u.SentChallenges)
+                      .HasForeignKey(pc => pc.IzazivacId)
+                      .OnDelete(DeleteBehavior.ClientSetNull); // ili DeleteBehavior.Restrict
+
+                // Veza sa Izazvanim (User koji prima izazov)
+                entity.HasOne(pc => pc.Izazvani)
+                      .WithMany(u => u.ReceivedChallenges)
+                      .HasForeignKey(pc => pc.IzazvaniId)
+                      .OnDelete(DeleteBehavior.ClientSetNull); // ili DeleteBehavior.Restrict
+
+                // Veza sa Challenge
+                entity.HasOne(pc => pc.Challenge)
+                      .WithMany() // Ovdje dodajte navigacioni property ako postoji u Challenge klasi
+                      .HasForeignKey(pc => pc.ChallengeId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Konfiguracija za UserChallenge
+            modelBuilder.Entity<UserChallenge>(entity =>
+            {
+                entity.HasOne(uc => uc.Korisnik)
+                      .WithMany(u => u.UserChallenges)
+                      .HasForeignKey(uc => uc.IzazvaniId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(uc => uc.Challenge)
+                      .WithMany() // Ovdje dodajte navigacioni property ako postoji u Challenge klasi
+                      .HasForeignKey(uc => uc.ChallengeId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 } 

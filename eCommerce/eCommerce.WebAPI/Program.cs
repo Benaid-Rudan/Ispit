@@ -16,6 +16,10 @@ builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUnitOfMeasureService, UnitOfMeasureService>();
 
+builder.Services.AddTransient<IChallengeService, ChallengeService>();
+builder.Services.AddTransient<IUserChallengeService, UserChallengeService>();
+builder.Services.AddTransient<IPeerChallengeService, PeerChallengeService>();
+builder.Services.AddTransient<IChallengeRewardService, ChallengeRewardService>();
 
 
 builder.Services.AddTransient<BaseProductState>();
@@ -23,6 +27,8 @@ builder.Services.AddTransient<InitialProductState>();
 builder.Services.AddTransient<DraftProductState>();
 builder.Services.AddTransient<ActiveProductState>();
 builder.Services.AddTransient<DeactivatedProductState>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 builder.Services.AddMapster();
 // Configure database

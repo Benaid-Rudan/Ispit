@@ -10,4 +10,8 @@ class UserProvider extends BaseProvider<User> {
   User fromJson(dynamic json) {
     return User.fromJson(json);
   }
+  Future<User> getMe() async {
+    final user = await super.getMe();
+    return user;
+  }
 }
