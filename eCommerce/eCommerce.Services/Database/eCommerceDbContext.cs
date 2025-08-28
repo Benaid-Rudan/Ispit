@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace eCommerce.Services.Database
 {
@@ -22,7 +22,10 @@ namespace eCommerce.Services.Database
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
-       
+        public DbSet<Challenge> Challenge { get; set; }
+        public DbSet<UserChallenge> UserChallenge { get; set; }
+        public DbSet<PeerChallenge> PeerChallenge { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -180,6 +183,39 @@ namespace eCommerce.Services.Database
             modelBuilder.Entity<UserRole>()
                 .HasIndex(ur => new { ur.UserId, ur.RoleId })
                 .IsUnique();
+
+            modelBuilder.Entity<PeerChallenge>(entity =>
+            {
+                entity.HasOne(pc => pc.Izazivac)
+                      .WithMany()
+                      .HasForeignKey(pc => pc.IzazivacId)
+                      .OnDelete(DeleteBehavior.ClientSetNull); 
+
+                entity.HasOne(pc => pc.Izazvani)
+                      .WithMany()
+                      .HasForeignKey(pc => pc.IzazvaniId)
+                      .OnDelete(DeleteBehavior.ClientSetNull); 
+
+                // Veza sa Challenge
+                entity.HasOne(pc => pc.Challenge)
+                      .WithMany() 
+                      .HasForeignKey(pc => pc.ChallengeId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // Konfiguracija za UserChallenge
+            modelBuilder.Entity<UserChallenge>(entity =>
+            {
+                entity.HasOne(uc => uc.Izazvani)
+                      .WithMany()
+                      .HasForeignKey(uc => uc.IzazvaniId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(uc => uc.Challenge)
+                      .WithMany() 
+                      .HasForeignKey(uc => uc.ChallengeId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
         }
     }
 } 

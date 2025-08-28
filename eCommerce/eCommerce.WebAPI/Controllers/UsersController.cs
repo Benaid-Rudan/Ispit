@@ -35,6 +35,22 @@ namespace eCommerce.WebAPI.Controllers
                 
             return user;
         }
+        [HttpGet("current")]
+        public ActionResult<UserResponse> GetCurrent()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            // možeš preko servisa povuæi usera iz baze
+            var user = _userService.GetByIdAsync(int.Parse(userId)).Result;
+
+            if (user == null)
+                return NotFound();
+
+            return Ok(user);
+        }
 
         [HttpPost]
         public async Task<ActionResult<UserResponse>> Create(UserUpsertRequest request)

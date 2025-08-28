@@ -16,6 +16,21 @@ abstract class BaseProvider<T> with ChangeNotifier {
         defaultValue: "http://10.0.2.2:5121/api/");
   }
 
+  Future<T> getCurrent() async {
+  var url = "$_baseUrl$_endpoint/current";
+  var uri = Uri.parse(url);
+  var headers = createHeaders();
+
+  var response = await http.get(uri, headers: headers);
+
+  if (isValidResponse(response)) {
+    var data = jsonDecode(response.body);
+    return fromJson(data);
+  } else {
+    throw Exception("Unknown error");
+  }
+  }
+
   Future<SearchResult<T>> get({dynamic filter}) async {
     var url = "$_baseUrl$_endpoint";
 
