@@ -5,6 +5,8 @@ import 'package:ecommerce_mobile/providers/auth_provider.dart';
 import 'package:ecommerce_mobile/providers/logged_product_provider.dart';
 import 'package:ecommerce_mobile/providers/product_provider.dart';
 import 'package:ecommerce_mobile/providers/product_type_provider.dart';
+import 'package:ecommerce_mobile/providers/radniprostor_provider.dart';
+import 'package:ecommerce_mobile/providers/rezervacijaprostora_provider.dart';
 import 'package:ecommerce_mobile/providers/unit_of_measure_provider.dart';
 import 'package:ecommerce_mobile/providers/user_provider.dart';
 import 'package:ecommerce_mobile/screens/product_list.dart';
@@ -21,7 +23,13 @@ void main() {
         create: (context) => ProductTypeProvider()),
     ChangeNotifierProvider<CartProvider>(
         create: (context) => CartProvider()),
-        
+        ChangeNotifierProvider<RezervacijaprostoraProvider>(
+        create: (context) => RezervacijaprostoraProvider()),
+
+        ChangeNotifierProvider<RadniprostorProvider>(
+        create: (context) => RadniprostorProvider()),
+
+
            ChangeNotifierProvider<UserProvider>(
         create: (context) => UserProvider()),
   ], child: const MyLoginApp()));
