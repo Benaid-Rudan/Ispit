@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:ecommerce_mobile/model/cart_provider.dart';
 import 'package:ecommerce_mobile/providers/auth_provider.dart';
+import 'package:ecommerce_mobile/providers/challenge_provider.dart';
 import 'package:ecommerce_mobile/providers/logged_product_provider.dart';
+import 'package:ecommerce_mobile/providers/peer_challenge_provider.dart';
 import 'package:ecommerce_mobile/providers/product_provider.dart';
 import 'package:ecommerce_mobile/providers/product_type_provider.dart';
 import 'package:ecommerce_mobile/providers/unit_of_measure_provider.dart';
+import 'package:ecommerce_mobile/providers/user_challenge_provider.dart';
 import 'package:ecommerce_mobile/providers/user_provider.dart';
 import 'package:ecommerce_mobile/screens/product_list.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +27,14 @@ void main() {
         
            ChangeNotifierProvider<UserProvider>(
         create: (context) => UserProvider()),
+
+
+         ChangeNotifierProvider<ChallengeProvider>(
+        create: (context) => ChallengeProvider()),
+         ChangeNotifierProvider<PeerChallengeProvider>(
+        create: (context) => PeerChallengeProvider()),
+         ChangeNotifierProvider<UserChallengeProvider>(
+        create: (context) => UserChallengeProvider()),
   ], child: const MyLoginApp()));
 }
 
