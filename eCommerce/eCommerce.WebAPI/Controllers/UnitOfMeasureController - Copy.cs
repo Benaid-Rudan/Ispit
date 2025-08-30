@@ -1,5 +1,4 @@
 using eCommerce.Model.Requests;
-using eCommerce.Model.Responses;
 using eCommerce.Model.SearchObjects;
 using eCommerce.Services;
 using eCommerce.Services.Responses;
@@ -9,9 +8,9 @@ namespace eCommerce.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class MoodController : BaseCRUDController<MoodResponse, MoodSearchObject, MoodRequest, MoodRequest>
+    public class UnitOfMeasureController : BaseCRUDController<UnitOfMeasureResponse, UnitOfMeasureSearchObject, UnitOfMeasureUpsertRequest, UnitOfMeasureUpsertRequest>
     {
-        public MoodController(IMoodService service) : base(service)
+        public UnitOfMeasureController(IUnitOfMeasureService service) : base(service)
         {
         }
     }
