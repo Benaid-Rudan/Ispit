@@ -54,13 +54,17 @@ class _MoodScreenState extends State<MoodScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var sretan = moodSearchResult?.items?.where((x)=> x.statusRaspolozenja == "Sretan").length ?? 0;
     return MasterScreen(
       title: "Mood List",
       child: Center(
         child: Column(
           children: [
             _buildSearch(),
-            _buildResultView()
+            _buildResultView(),
+            Padding(padding: EdgeInsets.all(8.0),
+            child: Text("Moods sretan: $sretan"),
+            ),
           ],
         ),
       ),
@@ -159,21 +163,21 @@ class _MoodScreenState extends State<MoodScreen> {
 
     List<Widget> _buildProductCardList() {
     // final items = moodSearchResult?.items ?? [];
-    final sretan = moodSearchResult?.items?.where((e) => e.statusRaspolozenja == "Sretan").length ?? 0;
-    final tuzan = moodSearchResult?.items?.where((e) => e.statusRaspolozenja == "Tuzan").length ?? 0;
-    final umoran = moodSearchResult?.items?.where((e) => e.statusRaspolozenja == "Umoran").length ?? 0;
-    if (moodSearchResult == null || moodSearchResult?.items?.length == 0) {
-      return [Text("Loading...")];
-    }
+    // final sretan = moodSearchResult?.items?.where((e) => e.statusRaspolozenja == "Sretan").length ?? 0;
+    // final tuzan = moodSearchResult?.items?.where((e) => e.statusRaspolozenja == "Tuzan").length ?? 0;
+    // final umoran = moodSearchResult?.items?.where((e) => e.statusRaspolozenja == "Umoran").length ?? 0;
+    // if (moodSearchResult == null || moodSearchResult?.items?.length == 0) {
+    //   return [Text("Loading...")];
+    // }
 
-    List<Widget> list = moodSearchResult!.items!.map((x) => GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => MoodDetailsScreen(mood: x),
-          ),
-        );
-      },
+    List<Widget> list = moodSearchResult!.items!.map((x) => Container(
+      // onTap: () {
+      //   Navigator.of(context).push(
+      //     MaterialPageRoute(
+      //       builder: (context) => MoodDetailsScreen(mood: x),
+      //     ),
+      //   );
+      // },
       
       child: Column(
         children: [
@@ -188,12 +192,12 @@ class _MoodScreenState extends State<MoodScreen> {
       ),
     )).cast<Widget>().toList();
     
-    list.add(
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text("Sretan: $sretan, Tužan: $tuzan, Umoran: $umoran"),
-      ),
-    );
+    // list.add(
+    //   Padding(
+    //     padding: const EdgeInsets.all(8.0),
+    //     child: Text("Sretan: $sretan, Tužan: $tuzan, Umoran: $umoran"),
+    //   ),
+    // );
 
     return list;
   }
