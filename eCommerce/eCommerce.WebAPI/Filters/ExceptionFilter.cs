@@ -31,16 +31,24 @@ namespace eCommerce.WebAPI.Filters
             }
             else
             {
-                context.ModelState.AddModelError("ERROR", "Server side error, please check logs");
+                context.ModelState.AddModelError("ERROR", context.Exception.Message);
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
             }
+
 
             var list = context.ModelState.Where(x => x.Value.Errors.Count > 0)
                 .ToDictionary(x => x.Key, y => y.Value.Errors.Select(z => z.ErrorMessage));
 
-            context.Result = new JsonResult(new {
-                errors = list
+            context.Result = new JsonResult(new
+            {
+                error = new
+                {
+                    message = context.Exception.Message,
+                    stackTrace = context.Exception.StackTrace,
+                    inner = context.Exception.InnerException?.Message
+                }
             });
+
         }
     }
 }
