@@ -24,7 +24,17 @@ namespace eCommerce.WebAPI.Controllers
         {
             return await _userService.GetAsync(search ?? new UserSearchObject());
         }
-
+        [HttpGet("current")]
+        public async Task<ActionResult<UserResponse>> GetCurrentUser()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+                return Unauthorized();
+            var user = await _userService.GetByIdAsync(int.Parse(userId));
+            if (user == null)
+                return NotFound();
+            return Ok(user);
+        }
         [HttpGet("{id}")]
         public async Task<ActionResult<UserResponse>> GetById(int id)
         {

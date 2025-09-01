@@ -22,7 +22,10 @@ namespace eCommerce.Services.Database
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
-       
+
+        public DbSet<Challenge> Challenge { get; set; }
+        public DbSet<UserChallenge> UserChallenge { get; set; }
+        public DbSet<PeerChallenge> PeerChallenge { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -180,6 +183,37 @@ namespace eCommerce.Services.Database
             modelBuilder.Entity<UserRole>()
                 .HasIndex(ur => new { ur.UserId, ur.RoleId })
                 .IsUnique();
+
+            //UserChallenge
+            modelBuilder.Entity<UserChallenge>()
+                .HasOne(ur => ur.Korisnik)
+                .WithMany()
+                .HasForeignKey(ur => ur.KorisnikId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UserChallenge>()
+                .HasOne(ur => ur.Challenge)
+                .WithMany()
+                .HasForeignKey(ur => ur.ChallengeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PeerChallenge>()
+                .HasOne(ur => ur.Izazivac)
+                .WithMany()
+                .HasForeignKey(ur => ur.IzazivacId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<PeerChallenge>()
+                .HasOne(ur => ur.Izazvani)
+                .WithMany()
+                .HasForeignKey(ur => ur.IzazvaniId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<PeerChallenge>()
+                .HasOne(ur => ur.Challenge)
+                .WithMany()
+                .HasForeignKey(ur => ur.ChallengeId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 } 
