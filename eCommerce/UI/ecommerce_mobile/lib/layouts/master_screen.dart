@@ -1,4 +1,7 @@
+import 'package:ecommerce_mobile/model/user.dart';
+import 'package:ecommerce_mobile/providers/user_provider.dart';
 import 'package:ecommerce_mobile/screens/cart_screen.dart';
+import 'package:ecommerce_mobile/screens/challenge_list_screen.dart';
 import 'package:ecommerce_mobile/screens/product_details_screen.dart';
 import 'package:ecommerce_mobile/screens/product_list.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +36,12 @@ class _MasterScreenState extends State<MasterScreen> {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ProductDetailsScreen()));
             },), ListTile(title: Text('Cart'), onTap: () {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartScreen()));
+            },),
+
+            ListTile(title: Text('Challenge'), onTap: () async {
+              var userProvider = UserProvider();
+              var user = await userProvider.getCurrent();
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChallengeListScreen(user: user)));
             },),
           ],
         ),

@@ -35,6 +35,9 @@ namespace eCommerce.WebAPI.Controllers
                 return NotFound();
             return Ok(user);
         }
+       
+
+
         [HttpGet("{id}")]
         public async Task<ActionResult<UserResponse>> GetById(int id)
         {
