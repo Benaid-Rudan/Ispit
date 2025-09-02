@@ -51,34 +51,7 @@ namespace eCommerce.Services
         }
 
 
-        protected override IQueryable<PeerChallenge> ApplyFilter(IQueryable<PeerChallenge> query, SearchObject search)
-        {
-
-            query = query.Include(x => x.Challenge).Include(x => x.Izazvani).Include(x=>x.Izazivac);
-
-            if (search.DatumKreiranja.HasValue)
-            {
-                query = query.Where(x => x.DatumKreiranja.Date == search.DatumKreiranja.Value.Date);
-            }
-
-            if (!string.IsNullOrWhiteSpace(search.TipIzazova))
-            {
-                if (Enum.TryParse<TipIzazov>(search.TipIzazova, true, out var tip))
-                {
-                    query = query.Where(x => x.Challenge.TipIzazova == tip);
-                }
-            }
-
-            if (!string.IsNullOrWhiteSpace(search.StatusPeera))
-            {
-                if (Enum.TryParse<StatusPeer>(search.StatusPeera, true, out var status))
-                {
-                    query = query.Where(x => x.StatusPeera == status);
-                }
-            }
-
-            return base.ApplyFilter(query, search);
-        }
+        
 
 
     }
