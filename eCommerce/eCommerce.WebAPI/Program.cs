@@ -16,6 +16,9 @@ builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
 builder.Services.AddTransient<IRoleService, RoleService>();
 builder.Services.AddTransient<IUnitOfMeasureService, UnitOfMeasureService>();
 
+builder.Services.AddTransient<IChallengeService, ChallengeService>();
+builder.Services.AddTransient<IPeerChallengeService, PeerChallengeService>();
+builder.Services.AddTransient<IUserChallengeService, UserChallengeService>();
 
 
 builder.Services.AddTransient<BaseProductState>();
@@ -84,5 +87,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<eCommerceDbContext>();
+//    DbSeed.Seed(db);
+//}
 app.Run();
