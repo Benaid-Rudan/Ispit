@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerce.Services.Database;
 
@@ -11,9 +12,11 @@ using eCommerce.Services.Database;
 namespace eCommerce.Services.Migrations
 {
     [DbContext(typeof(eCommerceDbContext))]
-    partial class eCommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250911123931_addrewardinactivity")]
+    partial class addrewardinactivity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +44,12 @@ namespace eCommerce.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("RewardRuleId")
+                        .HasColumnType("int");
+
                     b.HasKey("ActivityId");
+
+                    b.HasIndex("RewardRuleId");
 
                     b.ToTable("Activity");
                 });
@@ -448,6 +456,9 @@ namespace eCommerce.Services.Migrations
                     b.Property<int>("ActivityId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ActivityId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("MaxDaysToComplete")
                         .HasColumnType("int");
 
@@ -460,7 +471,7 @@ namespace eCommerce.Services.Migrations
 
                     b.HasKey("RewardRuleId");
 
-                    b.HasIndex("ActivityId");
+                    b.HasIndex("ActivityId1");
 
                     b.ToTable("RewardRule");
                 });
@@ -669,6 +680,17 @@ namespace eCommerce.Services.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("eCommerce.Services.Database.Activity", b =>
+                {
+                    b.HasOne("eCommerce.Services.Database.RewardRule", "RewardRule")
+                        .WithMany()
+                        .HasForeignKey("RewardRuleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("RewardRule");
+                });
+
             modelBuilder.Entity("eCommerce.Services.Database.Asset", b =>
                 {
                     b.HasOne("eCommerce.Services.Database.Product", "Product")
@@ -809,7 +831,7 @@ namespace eCommerce.Services.Migrations
                 {
                     b.HasOne("eCommerce.Services.Database.Activity", "Activity")
                         .WithMany()
-                        .HasForeignKey("ActivityId")
+                        .HasForeignKey("ActivityId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

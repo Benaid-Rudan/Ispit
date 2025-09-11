@@ -22,7 +22,10 @@ namespace eCommerce.Services.Database
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<ProductType> ProductTypes { get; set; }
         public DbSet<UnitOfMeasure> UnitsOfMeasure { get; set; }
-       
+
+        public DbSet<Activity> Activity { get; set; }
+        public DbSet<UserActivity> UserActivity { get; set; }
+        public DbSet<RewardRule> RewardRule { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -180,6 +183,18 @@ namespace eCommerce.Services.Database
             modelBuilder.Entity<UserRole>()
                 .HasIndex(ur => new { ur.UserId, ur.RoleId })
                 .IsUnique();
+
+            modelBuilder.Entity<UserActivity>()
+                .HasOne(ur => ur.Korisnik)
+                .WithMany()
+                .HasForeignKey(ur => ur.KorisnikId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //modelBuilder.Entity<Activity>()
+            //   .HasOne(ur => ur.RewardRule)
+            //   .WithMany()
+            //   .HasForeignKey(ur => ur.RewardRuleId)
+            //   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 } 
