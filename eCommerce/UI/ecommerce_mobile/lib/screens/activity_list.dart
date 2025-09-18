@@ -26,7 +26,6 @@ class ActivityList extends StatefulWidget {
 
 class _ActivityListState extends State<ActivityList> {
   late UseractivityProvider useractivityProvider;
-  late RewardRuleProvider rewardRuleProvider;
   TextEditingController statusController = TextEditingController();
 
   SearchResult<UserActivity>? userActivityData;
@@ -42,7 +41,6 @@ class _ActivityListState extends State<ActivityList> {
   void initState() {
     super.initState();
     useractivityProvider = context.read<UseractivityProvider>();
-    rewardRuleProvider = context.read<RewardRuleProvider>();
     loadData();
   }
 
@@ -50,21 +48,12 @@ class _ActivityListState extends State<ActivityList> {
     var userActivity = await useractivityProvider.get();
     this.userActivityData = userActivity;
 
-    var rewards = await rewardRuleProvider.get();
-    this.rewardRules = rewards;
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    //  final Map<int, int> pointsByActivity = {};
-    // if (rewardRules != null && rewardRules!.items != null) {
-    //   for (var rule in rewardRules!.items!) {
-    //     if (rule.activityId != null && rule.numberOfPoints != null) {
-    //       pointsByActivity[rule.activityId!] = rule.numberOfPoints!;
-    //     }
-    //   }
-    // }
+    
     return MasterScreen(
       title: "Activity List",
       child: Center(
@@ -72,16 +61,7 @@ class _ActivityListState extends State<ActivityList> {
           children: [
             _buildSearch(),
             _buildResultView(),
-            // Padding(
-            //   padding: const EdgeInsets.all(16.0),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       const Text("Broj bodova po aktivnosti:", style: TextStyle(fontWeight: FontWeight.bold)),
-            //       ...pointsByActivity.entries.map((e) => Text("Aktivnost ID ${e.key}: ${e.value} bodova")),
-            //     ],
-            //   ),
-            // ),
+            
           ],
         ),
       ),
